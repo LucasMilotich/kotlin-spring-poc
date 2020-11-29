@@ -7,7 +7,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-data class Domain(
+data class DomainWithoutRelation(
         val value: String = UUID.randomUUID().toString()
 ) {
     @Id

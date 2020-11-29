@@ -13,20 +13,20 @@ class Service constructor(private val repository: Repo,
                           private val cache: Jedis,
                           private val registry: MeterRegistry) {
 
-    val counterWithCache = Counter.builder("withCache").register(registry)
-    val counterWithoutCache = Counter.builder("withOutCache").register(registry)
-    val timerCache = Timer.builder("timeWithCache").register(registry)
-    val timerWithoutCache = Timer.builder("timeWithOutCache").register(registry)
+    val counterWithRelation = Counter.builder("withRelation").register(registry)
+    val counterWithoutRelation = Counter.builder("withoutRelation").register(registry)
+    val timerRelation = Timer.builder("timeWithRelation").register(registry)
+    val timerWithoutRelation = Timer.builder("timeWithOutRelation").register(registry)
 
-    fun createWithCache(): Domain {
-        return timerCache.recordCallable<Domain> {
+    fun createWithCacheRelation(): Domain {
+        return timerRelation.recordCallable<Domain> {
             cache.get("counter")
 
             val domain = Domain()
             repository.save(domain)
 
             cache.incr("counter")
-            counterWithCache.increment()
+            counterWithRelation.increment()
             domain
         }
 
@@ -34,12 +34,12 @@ class Service constructor(private val repository: Repo,
     }
 
 
-    fun createWithoutCache(): Domain {
-        return timerWithoutCache.recordCallable<Domain> {
+    fun createWithoutRelation(): Domain {
+        return timerWithoutRelation.recordCallable<Domain> {
             val domain = Domain()
             repository.save(domain)
             repository.countAllByValueLike("%a%")
-            counterWithoutCache.increment()
+            counterWithoutRelation.increment()
             domain
         }
 
