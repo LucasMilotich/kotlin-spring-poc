@@ -1,4 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+repositories {
+	mavenCentral()
+	maven { url = uri("https://repo.spring.io/milestone") }
+	maven { url = uri("https://repo.spring.io/snapshot") }
+}
 
 plugins {
 	id("org.springframework.boot") version "2.4.0-SNAPSHOT"
@@ -11,11 +16,7 @@ group = "com."
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-repositories {
-	mavenCentral()
-	maven { url = uri("https://repo.spring.io/milestone") }
-	maven { url = uri("https://repo.spring.io/snapshot") }
-}
+
 
 dependencies {
 

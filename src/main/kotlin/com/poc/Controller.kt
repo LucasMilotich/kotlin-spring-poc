@@ -1,7 +1,8 @@
 package com.poc
 
-import com.poc.model.Domain
-import org.springframework.web.bind.annotation.GetMapping
+import com.poc.model.DomainWithMoreRelations
+import com.poc.model.DomainWithRelation
+import com.poc.model.DomainWithoutRelation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -9,12 +10,17 @@ import org.springframework.web.bind.annotation.RestController
 class Controller constructor(private val service: Service){
 
     @PostMapping("/")
-    fun create(): Domain {
-        return service.createWithoutCache()
+    fun create(): DomainWithRelation {
+        return service.createWithRelation()
     }
 
-    @PostMapping("/with-cache")
-    fun createWithCache(): Domain {
-        return service.createWithCache()
+    @PostMapping("/with-more-relations")
+    fun createWithMoreRelations(): DomainWithMoreRelations {
+        return service.createWithMoreRelation()
+    }
+
+    @PostMapping("/with-out-relation")
+    fun createWithCache(): DomainWithoutRelation {
+        return service.createWithoutRelation()
     }
 }
